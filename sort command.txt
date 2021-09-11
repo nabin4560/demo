@@ -1,0 +1,10 @@
+Sort   :- used for sorting file
+Sort –r   :- sort file in reverse order
+Sort –k 2   :- used to sort file using column
+Sort –c   :- check file already sorted or not
+Sort –u   :-sort files and removed duplicate
+Sort –n   :-sort numerical value 
+Sort –nr   :-sort numerical value in reverse order
+Sort –M   :-
+Sort –o output.txt   :- write the output to a new file, output.txt,
+Sor
