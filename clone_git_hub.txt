@@ -1,0 +1,36 @@
+  
+$ git clone https://github.com/nabin4560/remote.git ( to create clone of github repo)
+Cloning into 'remote'...
+warning: You appear to have cloned an empty repository.
+
+  
+$ cd remote (chnage dir )
+
+  /remote (master)
+$ ls
+git_config.txt
+
+  /remote (master)
+
+$ git add . (add file )
+
+  /remote (master)
+$ git commit -m "added file git_config" (commit the file with message)
+[master (root-commit) 4ae715e] added file git_config
+ 1 file changed, 48 insertions(+)
+ create mode 100644 git_config.txt
+
+  /remote (master)
+$ git push origin master (upload file to repo)
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 542 bytes | 271.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/nabin4560/remote.git
+ * [new branch]      master -> master
+
+  /remote (master)
+$
+
