@@ -1,0 +1,16 @@
+syntax
+
+grep [options] pattern [files]
+
+options
+
+$grep -i:- ignores, case for matching
+$grep -c:- this prints only a count of the lines that match a pattern
+$grep -l:- displays list of a filenames only.
+$grep -h:- display the matched lines, but do not display the filenames.
+$grep -n:- display the matched lines and thier line numbers.
+$grep -v:- prints out all the lines that do not matches the pattern.
+$grep "^unix" file.txt:- the ^ regular expression pattern specifies the stat of line.
+$grep "unix$" file.txt:- the $ regular expression pattern specifies the end of the line.
+$grep -f:- takes pattern from file, one per line
+$grep -o:- print only the matched parts of a matching line.
