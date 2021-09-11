@@ -1,0 +1,48 @@
+$ git config --global user.name "nabin4560"
+$ git config --global user.email "nabinmahato190@gmail.com"
+
+to pull from remote repo
+
+first create new dir
+$ git init "folder name"
+
+then 
+$ git pull "file url"
+
+for private we have give authentication
+
+
+for push operation
+
+$ mkdir git_demo1 !! make directory
+
+enter that dir
+$cd "dir name"
+
+$git init !! to make online
+
+create a file
+
+$touch "file name"
+
+now type 
+
+$git add "file name"
+
+now
+
+$git commit -m "message"
+
+now remote access
+
+$ git remote add origin "url"
+
+to show repo
+
+$git remote -v
+
+now push
+
+$git push origin master
+
+your file is reflect in github.
