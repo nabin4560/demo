@@ -1,0 +1,8 @@
+tr command syntax
+
+$tr [option] set1 [set2]
+
+$tr -c:- complements the set of character in string i.e, operations apply to character not in the given set
+$tr -d:- delete characters in the first set from the output
+$tr -s:- replaces repeated characters listed in the set1 with single occurrence
+$tr -t:- truncates set1
