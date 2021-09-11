@@ -1,0 +1,44 @@
+ 
+$ mkdir git_demo1 (create new dir)
+
+ 
+$ cd git_demo1 (change dir)
+
+ /git_demo1
+
+$ git init (init dir to upload file)
+Initialized empty Git repository in C:/Users/nabin_mahato/Documents/New folder/git_demo1/.git/
+
+ /git_demo1 (master)
+
+$ touch demo.txt (create a file)
+
+ /git_demo1 (master)
+
+$ git add demo.txt (add file to upload)
+
+ /git_demo1 (master)
+
+$ git commit -m "commiting the file demo.txt" (commit the file to upload with message)
+[master (root-commit) cc7657a] commiting the file demo.txt
+ 1 file changed, 4 insertions(+)
+ create mode 100644 demo.txt
+
+ /git_demo1 (master)
+
+$ git remote add origin https://github.com/nabin4560/newremoterepo.git (set origin where to upload file )
+
+ /git_demo1 (master)
+$ git remote -v
+origin  https://github.com/nabin4560/newremoterepo.git (fetch)
+origin  https://github.com/nabin4560/newremoterepo.git (push)
+
+ /git_demo1 (master)
+
+$ git push origin master (upload the file to that origin )
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 243 bytes | 121.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/nabin4560/newremoterepo.git
+ * [new branch]      master -> master
