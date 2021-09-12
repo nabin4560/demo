@@ -1,0 +1,43 @@
+less command
+
+syntax :- less filename 
+
+ls -E : causes less to automatically exit the first time it reaches end of file. 
+ls -f : forces non-regular file to open. 
+ls -F : causes less to exit if entire file can be displayed on first screen 
+ls -g : highlight the string which was found by last search command 
+ls -G : suppresses all highlighting of strings found by search commands 
+ls -i : cause searches to ignore case 
+ls -n : suppresses line numbers 
+ls -p pattern : it tells less to start at the first occurrence of pattern in the file 
+ls -s : causes consecutive blank lines to be squeezed into a single blank line
+ 
+.....................................................................................
+head command
+
+Syntax:
+head [OPTION]... [FILE]...
+
+head -n num: Prints the first ‘num’ lines instead of first 10 lines. num is mandatory to be specified in command otherwise it displays an error. 
+
+head -c num: Prints the first ‘num’ bytes from the file specified. Newline count as a single character, so if head prints out a newline, it will count it as a byte
+
+head -q: It is used if more than 1 file is given. Because of this command, data from each file is not precedes by its file name. 
+
+head -v:By using this option, data from the specified file is always preceded by its file name. 
+
+.....................................................................................
+tail command 
+Syntax:
+
+tail [OPTION]... [FILE]...
+
+tail -n num:  Prints the last ‘num’ lines instead of last 10 lines. num is mandatory to be specified in command otherwise it displays an error.
+
+tail -c num:: Prints the last ‘num’ bytes from the file specified. Newline count as a single character, so if tail prints out a newline, it will count it as a byte. In this option it is mandatory to write -c followed by positive or negative num depends upon the requirement
+
+tail -q:It is used if more than 1 file is given. Because of this command, data from each file is not precedes by its file name.
+
+tail -v:By using this option, data from the specified file is always preceded by its file name.
+
+tail -f:This option is mainly used by system administration to monitor the growth of the log files written by many Unix program as they are running. 
