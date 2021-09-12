@@ -1,0 +1,59 @@
+
+Find command
+
+1. Search a file with specific name.
+
+$ find ./GFG -name sample.txt 
+2. Search a file with pattern.
+
+$ find ./GFG -name *.txt 
+
+3. How to find and delete a file with confirmation.
+
+$ find ./GFG -name sample.txt -exec rm -i {} \; 
+
+4. Search for empty files and directories.
+
+$ find ./GFG -empty
+
+5. Search for file with entered permissions.
+
+$ find ./GFG -perm 664
+
+6. Search text within multiple files.
+
+$ find ./ -type f -name "*.txt" -exec grep 'Geek'  {} \;
+
+1. Search a file with specific name.
+
+$ find ./GFG -name sample.txt 
+
+Tree command
+
+1. to install tree 
+
+ $ sudo apt install tree 
+
+2. Display the tree hierarchy of a directory  
+
+ $ tree -a ./GFG 
+
+3. List files with entered pattern  
+
+ $ tree -P sample* . 
+
+4. List those directories which have greater ‘N’ number of files/directories  
+
+ $ tree --filelimit 3 ./GFG 
+
+5. List files with their permissions.  
+
+ $ tree -p ./GFG 
+
+6. Prints the device number to which the file or directory belongs.  
+
+ $ tree --device ./GFG 
+
+7. Prints the output by last modification time instead of alphabetically.  
+
+ $ tree -t ./GFG 
