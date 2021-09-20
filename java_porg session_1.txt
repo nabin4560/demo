@@ -1,0 +1,364 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        int num1=10,num2=20;
+        int sum =num1+num2;
+        System.out.println("sum ="+sum);
+    }
+}
+
+sum =30
+............................................................
+ex-2
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code he
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter two numbers");
+        int num1 = sc.nextInt();
+        int num2 = sc.nextInt();
+        int sum =num1+num2;
+        System.out.println("sum ="+sum);
+    }
+}
+enter two numbers
+20
+20
+sum =40
+....................................................................
+ex-3
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code he
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter number");
+        int num = sc.nextInt();
+
+        if(num%2==0)
+        {
+            System.out.println(num+" is a even number");
+        }
+        else
+        {
+            System.out.println(num+ " is a odd number");
+        }
+
+    }
+}
+enter number
+12
+12 is a even number
+
+Process finished with exit code 0
+
+enter number
+27
+27 is a odd number
+
+Process finished with exit code 0
+.....................................................................
+ex-4
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // write your code he
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" finding largest  of 3 number using ternary operator ");
+        int n1 = sc.nextInt();
+        double n2 = sc.nextDouble();
+        long n3 = sc.nextLong();
+        double lar1 = (n1 > n2) ? n1 : n2;
+        double lar2 = (lar1 > n3) ? lar1 : n3;
+        System.out.println("largest number:" + lar2);
+
+    }}
+
+
+ finding largest  of 3 number using ternary operator 
+12
+3.454
+123456
+largest number:123456.0
+
+Process finished with exit code 0
+...........................................................
+ex-5
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // write your code he
+        Scanner sc = new Scanner(System.in);
+        float f1 = 13.3f;
+        double d1 = f1;
+        float f2 = (float)d1;
+        int i1 =(int) d1;
+        System.out.println(f1);
+        System.out.println( d1);
+        System.out.println(i1);
+
+
+
+    }
+}
+13.3
+13.300000190734863
+13
+.......................................................
+ex-6
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // write your code he
+       int i =10;
+       int ans = ++i;
+        System.out.println(i+ " "+ans);
+        int ans1 = i++;
+        System.out.println(i+" "+ ans1);
+
+
+
+    }
+}
+11 11
+12 11
+.......................................................................
+ex-7
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter the number to be reversed");
+        int num = sc.nextInt();
+        int revnum = reverseNum(num);
+        System.out.println(revnum);
+    }
+
+    public static int reverseNum(int n)
+    {
+        int rem=0,revnum=0;
+        while(n!=0)
+        {
+            rem =n%10;
+            revnum=revnum*10+rem;
+            n=n/10;
+        }
+        return revnum;
+    }
+}
+enter the number to be reversed
+123
+321
+.........................................................................
+ex-8
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter number");
+        int num = sc.nextInt();
+        if(isprime(num))
+        {
+            System.out.println("number is prime");
+        }
+        else
+        {
+            System.out.println("not a prime");
+        }
+
+    }
+
+    public static boolean isprime(int num)
+    {
+        boolean flag =true;
+        for(int i=2;i<=(num/2);i++)
+        {
+            if(num % i ==0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+}
+
+enter number
+12
+not a prime
+
+enter number
+17
+number is prime
+.....................................................................
+ex-9
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter number");
+        int num = sc.nextInt();
+        System.out.println(fact(num));
+    }
+
+    public static int fact(int num)
+    {
+        if(num==1)
+        {
+            return 1;
+        }
+        else
+        {
+            return num*fact(num-1);
+        }
+    }
+}
+enter number
+5
+120
+........................................................................
+ex-10
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter the month number");
+        int mno = sc.nextInt();
+        String msg = tofinddays(mno);
+        System.out.println(msg);
+
+    }
+    public static String tofinddays(int mno)
+    {
+        String msg;
+        switch (mno)
+        {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12 : msg ="has 31 days";
+                      break;
+            case 2: msg ="has 28 or 29 days";
+                    break;
+            case 4:
+            case 6:
+            case 9:
+            case 11: msg="has 30 days";
+                     break;
+            default:
+                msg = "invalid month no.";
+        }
+        return msg;
+    }
+}
+
+enter the month number
+2
+has 28 or 29 days
+
+enter the month number
+1
+has 31 days
+.........................................................................
+ex-11
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[]arr = {10,20,30,40,50};
+
+        System.out.println("printing the elements in the array");
+        for(int i =0;i<arr.length;i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+
+
+    }
+}
+printing the elements in the array
+10 20 30 40 50 
+...............................................................
+ex-12
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter the no. of elements:");
+        int n = sc.nextInt();
+        int []arr =new int[n];
+
+        System.out.println("enter the array element");
+        for(int i=0;i<arr.length;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        System.out.println("array contents are:");
+        for(int i =0;i<arr.length;i++)
+        {
+            System.out.print(arr[i]+ " ");
+        }
+
+    sc.close();
+    }
+}
+enter the no. of elements:
+5
+enter the array element
+1
+2
+3
+4
+5
+array contents are:
+1 2 3 4 5 
+........................................................................
