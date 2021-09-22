@@ -1,0 +1,397 @@
+package com.company;
+
+public class Address {
+    private int doorNo;
+    private String street;
+    private String state;
+    private int pinCode;
+
+    public Address(int doorNo, String street, String state, int pinCode) {
+        this.doorNo = doorNo;
+        this.street = street;
+        this.state = state;
+        this.pinCode = pinCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "doorNo=" + doorNo +
+                ", street='" + street + '\'' +
+                ", state='" + state + '\'' +
+                ", pinCode=" + pinCode +
+                '}';
+    }
+}
+package com.company;
+
+public class Person {
+    private int personId;
+    private String name;
+    private Address address;
+
+    public Person(int personId, String name, Address address) {
+        this.personId = personId;
+        this.name = name;
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "personId=" + personId +
+                ", name='" + name + '\'' +
+                ", address=" + address +
+                '}';
+    }
+}
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Address address = new Address(8,"3rd cross","karnataka",560097);
+        Person person = new Person(1,"nabin",address);
+        System.out.println(person);
+
+    }
+}
+Person{personId=1, name='nabin', address=Address{doorNo=8, street='3rd cross', state='karnataka', pinCode=560097}}
+
+.................................................................................
+dice game.
+two players playing in the stadium
+
+each player will have two dice
+
+each dice give score 1 to 6 (randomly generated)
+
+output of this application who has won the game :
+in one chance depending upon score of two dice
+.................................................................................
+solution:
+package com.company;
+
+import java.util.Random;
+
+public class Dice {
+    private int fValue;
+    public int roll()
+    {
+        Random rand = new Random();
+        fValue =((int)rand.nextInt(5)+1);// start boundry from 1 go to 6-1
+        return fValue;
+    }
+    public int getfValue()
+    {
+        return fValue;
+    }
+}
+package com.company;
+
+public class Player {
+    Dice d1;
+    Dice d2;
+
+    public Player() {
+        d1 = new Dice();
+        d2 = new Dice();
+    }
+    public int play()
+    {
+        return(d1.roll()+d2.roll());
+    }
+    public int getD1score()
+    {
+        return (d1.getfValue());
+    }
+    public int getD2score()
+    {
+        return (d2.getfValue());
+    }
+}
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Player p1 = new Player();
+      int p1score = p1.play();
+      int p1d1score=p1.getD1score();
+      int p1d2score=p1.getD2score();
+
+        System.out.println("p1 score: "+p1score);
+        System.out.println("p1 d1: "+p1d1score+"    "+"p1 d2: "+p1d2score);
+
+        Player p2 = new Player();
+
+        int p2score = p2.play();
+        int p2d1score=p2.getD1score();
+        int p2d2score=p2.getD2score();
+
+        System.out.println("p2 score: "+p2score);
+        System.out.println("p2 d1: "+p2d1score+"    "+"p2 d2: "+p2d2score);
+
+        if(p1score>p2score)
+        {
+            System.out.println("p1 won the game");
+        }
+        else
+        {
+            if(p1score==p2score)
+            {
+                System.out.println("game draw");
+            }
+            else
+            {
+                System.out.println("p2 won the game");
+            }
+        }
+    }
+}
+p1 score: 6
+p1 d1: 4    p1 d2: 2
+p2 score: 5
+p2 d1: 3    p2 d2: 2
+p1 won the game
+
+p1 score: 5
+p1 d1: 1    p1 d2: 4
+p2 score: 6
+p2 d1: 3    p2 d2: 3
+p2 won the game
+.................................................................................
+1. polymorphism :
+	1.Static polymorphism : behaviour of an object : method of the class from which the object is created.
+
+constructor overloading : 
+we can have different forms of constructors depending upon the inputs pass
+
+function overloading --
+................................................................................
+constructor overloading
+........................
+we trying paint circles in canvas
+
+package com.company.circle;
+
+public class Circle {
+    private double radius;
+    private String color;
+
+    // zero paramatized constructor
+    public Circle()
+    {
+        /*this.radius=3.5;
+        this.color="blue";*/
+        this(3.5,"blue");// invoing the fully paramatized cosntructor
+
+    }
+    public Circle(double radius)
+    {
+        this(radius,"brown");
+    }
+    public Circle(String color)
+    {
+        this(6.5,color);
+    }
+
+    // complete parametized constructor (customized circle)
+    public Circle(double radius, String color) {
+        this.radius = radius;
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "radius=" + radius +
+                ", color='" + color + '\'' +
+                '}';
+    }
+}
+package com.company;
+
+import com.company.Canvas;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Circle c1 = new Circle();
+        Circle c2 = new Circle(2.3);
+        Circle c3 = new Circle("red");
+        Circle c4 = new Circle(4.5,"yellow");
+
+        System.out.println(c1+"\n"+c2+"\n"+c3+"\n"+c4);
+    }
+}
+Circle{radius=3.5, color='blue'}
+Circle{radius=2.3, color='brown'}
+Circle{radius=6.5, color='red'}
+Circle{radius=4.5, color='yellow'}
+...............................................................................
+function overloading:
+.....................
+package com.company.utility;
+
+public class Summation {
+
+    public int add(int x,int y)
+    {
+        return(x+y);
+    }
+    public double add(int x,float y,double z)
+    {
+        return (x+y+z);
+    }
+    public String add(String str1,String str2)
+    {
+        return (str1+" "+str2);
+    }
+
+}
+package com.company.mainpack;
+
+import com.company.utility.Summation;
+
+public class Main {
+
+    public static void main(String[] args){
+        Summation sob = new Summation();
+
+        System.out.println(sob.add(10,20));
+        System.out.println(sob.add(10,3.45f,12.0));
+        System.out.println(sob.add("good","afternoon"));
+
+    }
+}
+30
+25.449999809265137
+good afternoon
+................................................................................
+package com.company.utility;
+
+public class Tax {
+
+    public double calc_tax(long amt,char status)
+    {
+        return (amt*0.1);
+    }
+
+}
+package com.company.mainpack;
+
+
+import com.company.utility.Tax;
+
+public class Main {
+
+    public static void main(String[] args){
+	Tax tax = new Tax();
+        System.out.println("tax amount: "+tax.calc_tax(20000,'d'));
+
+    }
+}
+
+tax amount: 2000.0
+.................................................................................
+package com.company.utility;
+
+public class Average {
+
+    //this demo for ...operator in java
+    public double calc_avg(int ...numbers)
+    {
+        int sum=0;
+        for(int n:numbers)
+        {
+            sum+=n;
+        }
+        return (sum/numbers.length);
+    }
+    public double cal_avg(int d,long l,double ...numbers)
+    {
+        double sum= d+l;
+        for (double x:numbers)
+        {
+            sum+=x;
+        }
+        return (sum/(numbers.length+2));
+    }
+    
+}
+package com.company.mainpack;
+
+import com.company.utility.Average;
+
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args){
+	Average avg = new Average();
+        Scanner sc = new Scanner(System.in);
+        System.out.println(avg.calc_avg(10,20,30,40,50));
+        System.out.println(avg.cal_avg(10,123456789,15.5,20.5,12.5));
+
+
+    }
+}
+30.0
+2.46913695E7
+................................................................................
+
+package spack;
+
+public class Simple {
+    private static int count;
+    private int pid;
+    private String pname;
+
+    // block to initialize static variable;
+    static {
+        count =0;
+    }
+
+    public Simple(int pid, String pname) {
+        this.pid = pid;
+        this.pname = pname;
+        ++count;
+    }
+
+    @Override
+    public String toString() {
+        return "Simple{" +
+                "pid=" + pid +
+                ", pname='" + pname + '\'' +
+                '}';
+    }
+
+    public static int getCount() {
+        return count;
+    }
+}
+package com.company;
+
+import spack.Simple;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Simple s1 = new Simple(01,"nabin");
+        Simple s2 = new Simple(02,"king");
+        Simple s3 = new Simple(03,"aarya");
+
+        System.out.println(Simple.getCount());
+        System.out.println(s1+"\n"+s2+"\n"+s3);
+
+
+    }
+}
+3
+Simple{pid=1, pname='nabin'}
+Simple{pid=2, pname='king'}
+Simple{pid=3, pname='aarya'}
+.............................................................................
