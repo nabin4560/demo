@@ -1,0 +1,258 @@
+Exception handling
+Wrapper classes in java
+collections
+
+.......................................................................
+
+1.classes objects
+2.Encapsulation
+3.Static polymorphism : constructor overloading,function overloading
+4. Dynamic polymorphism: inheritance : function overloading
+Abstract classes & interfaces
+
+.......................................................................
+			object
+			  |
+			Throwable
+	  |----------------|--------------|
+	Exception			Error
+Exception: 
+it is event ,which occurs during the execution of the programs,that disrupts the normal flow of the program instruction.
+
+exception classes in java
+	-throwable root class for all exeception classes 
+		-Error: stackoverflow outofmemory error ---> kindly don't handle we programmers / coders are not responsible for this errors
+
+they are very vital or serve error, they need to handle by jvm
+
+Exceptions:
+	1.checked  exception (compile time exception):
+	other than runtimeException class all others
+	are checked exceptions.compiler will force to handle these
+	exeception
+
+
+	2. unchecked exception (runtime exceptions)
+	all the classes under RuntimeExceptions class are included as 		unchecked exception
+1. try,catch,throw and finally
+
+result = n1/n2 n2 =0
+jvm --> Arithmetic Exception class --> creating an object of this class throwing the object with in message
+
+
+
+
+.......................................................................
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int result =0;
+        // ArrayIndexOutOfBoundException, NumberFormatException,Arthmatic Exception
+        try { // Anticipated block
+            int n1 = Integer.parseInt(args[0]); //commandline argument
+            int n2 = Integer.parseInt(args[1]);
+            result = n1 / n2;
+        }
+        catch(ArithmeticException e)
+        {
+            System.out.println("denominator is zero"+e.getMessage());
+        }
+        System.out.println(result);
+        System.out.println("bye !!!!!!!");
+
+    }
+}
+denominator is zero/ by zero
+0
+bye !!!!!!!
+.......................................................................
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int result =0;
+        // ArrayIndexOutOfBoundException, NumberFormatException,Arthmatic Exception
+        try { // Anticipated block
+            int n1 = Integer.parseInt(args[0]); //commandline argument
+            int n2 = Integer.parseInt(args[1]);
+            result = n1 / n2;
+        }
+        catch(ArithmeticException e)
+        {
+            System.out.println("denominator is zero "+e.getMessage());
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("invalid input "+e.getMessage());
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            System.out.println("insufficient input "+e.getMessage());
+        }
+        System.out.println(result);
+        System.out.println("bye !!!!!!!");
+
+    }
+}
+invalid input For input string: "2.0"
+0
+bye !!!!!!!
+.......................................................................
+read the data scanner class instance
+read through commandline
+stream classes: inputStream, outputstream
+.......................................................................
+package com.torryharris.exceptionpack;
+
+import java.io.*;
+
+public class ReadInput {
+
+    public static void readInput()
+    {
+        InputStreamReader ir = null;
+        BufferedReader br= null;
+
+        String str1,str2;
+        // inputstreamreader is pipelinewith bufferedreader
+
+
+
+    try {
+        ir = new InputStreamReader(System.in);
+        br = new BufferedReader(ir);
+        System.out.println("read two input values");
+        str1 = br.readLine();
+        str2 = br.readLine();
+
+        int result = Integer.parseInt(str1)/Integer.parseInt(str2);
+        System.out.println(result);
+    }
+    catch (IOException e) {
+        e.printStackTrace();
+    }
+    catch(ArithmeticException e)
+    {
+        System.out.println("denominator is zero "+e.getMessage());
+    }
+    catch(NumberFormatException e)
+    {
+        System.out.println("invalid input "+e.getMessage());
+    }
+    catch(ArrayIndexOutOfBoundsException e)
+    {
+        System.out.println("insufficient input "+e.getMessage());
+    }
+    finally {
+
+        try {
+            ir.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+}
+
+
+}
+package com.company;
+
+import com.torryharris.exceptionpack.ReadInput;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ReadInput.readInput();
+    }
+}
+read two input values
+10.0
+2
+invalid input For input string: "10.0"
+......................................................................
+package com.torryharris.Exceptionpack;
+
+public class InvaliAgeException extends Exception{
+    private String msg;
+
+    public InvaliAgeException(String msg) {
+        this.msg = msg;
+    }
+
+    @Override
+    public String getMessage() {
+        return msg;
+    }
+}
+package com.citizen;
+
+import com.torryharris.Exceptionpack.InvaliAgeException;
+
+public class Citizen {
+    private int adharno;
+    private String name;
+    private int age;
+
+    public Citizen(int adharno, String name, int age) {
+        this.adharno = adharno;
+        this.name = name;
+        this.age = age;
+    }
+    public String getLicense() throws InvaliAgeException {
+        if(age<18)
+        {
+            throw new InvaliAgeException("hi young master .....lincense can not be issued");
+
+        }
+        else
+            if((age<=75) && (age>=18))
+            return ("congrats.........lincense issued");
+            else
+                throw new InvaliAgeException("Hi senior citizen.... not allowed");
+
+    }
+
+    @Override
+    public String toString() {
+        return "Citizen{" +
+                "adharno=" + adharno +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
+package com.company;
+
+import com.citizen.Citizen;
+import com.torryharris.Exceptionpack.InvaliAgeException;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Citizen citizen1 = new Citizen(4560,"nabin",10);
+        System.out.println(citizen1);
+        try{
+            System.out.println(citizen1.getLicense());
+        }
+        catch (InvaliAgeException e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
+Citizen{adharno=4560, name='nabin', age=10}
+hi young master .....lincense can not be issued
+
+Citizen{adharno=4560, name='nabin', age=20}
+congrats.........lincense issued
+..............................................................................................................................................
+collection framework : All data structures(array : arraylist,linkedlist,stack,queue,priority queue,vector,sets,)
+
