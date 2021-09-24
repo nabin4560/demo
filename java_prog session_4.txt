@@ -1,0 +1,501 @@
+Bank account problem
+---------------------
+
+package com.torryharris.accountpack;
+
+import java.util.Random;
+
+public class Account {
+
+    private static int count;
+    private final long accNo;
+    private String acctype;
+    private double balance;
+
+    static
+    {
+        count=0;
+    }
+    public static long getCount()
+    {
+        Random rand = new Random();
+        count = rand.nextInt(1000)+2000;
+        return (++count);
+    }
+
+    public Account(String acctype, double balance) {
+        this.accNo=getCount();
+        this.acctype = acctype;
+        this.balance = balance;
+    }
+
+    public double deposit(double amount)
+    {
+         balance+=amount;
+         return amount;
+
+    }
+    public double withdraw(double amount)
+
+    {
+        balance-=amount;
+        return amount;
+    }
+    public double getBalance()
+    {
+        return balance;
+    }
+
+    @Override
+    public String toString() {
+        return "account{" +
+                "accNo=" + accNo +
+                ", acctype='" + acctype + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
+}
+package com.company.bankpack;
+
+import com.torryharris.accountpack.Account;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Account acc = new Account("saving",5000);
+        Account acc2 = new Account("recurring",50000);
+        System.out.println(acc);
+        System.out.println("amount deposit: "+acc.deposit(1000));;
+
+        System.out.println("current balance: "+acc);
+        System.out.println("amount withdraw: "+acc.withdraw(1000));
+        System.out.println("current account state: "+acc);
+
+        System.out.println(".........................................................");
+
+        System.out.println(acc2);
+    }
+}
+account{accNo=2016, acctype='saving', balance=5000.0}
+amount deposit: 1000.0
+current balance: account{accNo=2016, acctype='saving', balance=6000.0}
+amount withdraw: 1000.0
+current account state: account{accNo=2016, acctype='saving', balance=5000.0}
+.........................................................
+account{accNo=2640, acctype='recurring', balance=50000.0}
+
+-................................................................................
+Default variable:
+which has no access specifier
+public: 
+private:
+protected:
+default:public to all classes within the same package.
+.................................................................................
+dynamic polymorphism:
+concept of inheritance:concept of oops
+1. Extending the projects features is possible using inheritance 
+2.Generalization and specification
+1.details of trainees
+	trainee ---> regno,name,address and methods (general class)
+online trainee
+	---> weekend trainee	weekday trainee ondemand
+................................................................................
+	
+			Employee
+	|-------------------|------------------|
+	manager		Programmers	accountants
+
+every manager (child class) is a Employee(base class)
+
+oops different type of inheritance:-
+-single inheritance
+-multiple inheritance XXX not allowed in java
+-hierarchical inheritance
+multilevel inheritance
+hybrid inheritance(also known as virtual inheritance)
+
+.................................................................................
+employee prog
+-------------
+package com.torryharris.emppack;
+
+public class Employee {
+    protected int empID;
+    protected String empName;
+    protected int sal;
+
+    public Employee(int empID, String empName, int sal) {
+        this.empID = empID;
+        this.empName = empName;
+        this.sal = sal;
+    }
+    public String getDetails()
+    {
+        return(empID+"   "+empName+"     "+sal);
+    }
+}
+package com.torryharris.emppack;
+
+public class Manager extends Employee{
+    private String deptName;
+    private int empcount;
+
+    public Manager(int empID, String empName, int sal,String deptName,int empcount) {
+        super(empID, empName, sal);//constructor chaining ,base class constructor evoked within derived class constructor
+                                //using super class
+        this.deptName=deptName;
+        this.empcount=empcount;
+    }
+    @Override
+    public String getDetails()
+    {
+        return super.getDetails()+"    "+deptName+"    "+empcount;
+    }
+}
+package com.torryharris.emppack;
+
+public class Programmer extends Employee{
+    private int noOfProjects;
+    private String skillSet;
+
+    public Programmer(int empID, String empName, int sal,int noOfProjects,String skillSet) {
+        super(empID, empName, sal);
+        this.noOfProjects=noOfProjects;
+        this.skillSet=skillSet;
+    }
+
+    @Override
+    public String getDetails() {
+        return super.getDetails()+"     "+noOfProjects+"    "+skillSet;
+    }
+}
+package com.company;
+
+import com.torryharris.emppack.Employee;
+import com.torryharris.emppack.Manager;
+import com.torryharris.emppack.Programmer;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Employee employee1 = new Employee(100,"nabin",10000);
+        System.out.println(employee1.getDetails());
+
+        Manager manager1 = new Manager(200,"king",40000,"hr",5);
+        System.out.println(manager1.getDetails());
+
+        Programmer prog1 = new Programmer(300,"aarya",30000,5,"full stack developer");
+        System.out.println(prog1.getDetails());
+    }
+}
+100   nabin     10000
+200   king     40000    hr    5
+300   aarya     30000     5    full stack developer
+.................................................................................
+some changes 
+package com.company;
+
+import com.torryharris.emppack.Employee;
+import com.torryharris.emppack.Manager;
+import com.torryharris.emppack.Programmer;
+
+public class Main {
+
+    public static void main(String[] args) {
+       /* Employee employee1 = new Employee(100,"nabin",10000);
+        System.out.println(employee1.getDetails());
+
+        Manager manager1 = new Manager(200,"king",40000,"hr",5);
+        System.out.println(manager1.getDetails());
+
+        Programmer prog1 = new Programmer(300,"aarya",30000,5,"full stack developer");
+        System.out.println(prog1.getDetails());*/
+
+        //............................................................
+        // giving a base class reference to a derived class object
+        //since the instance created is of manager class and getDetails() is overridden
+        // getDetails of manager class is executed.
+        //Dynamic polymorphism : which object is created its overridden method work
+        //manager instance upcasted...
+       /* Employee e1 = new Manager(201,"ram",40000,"it",5);
+        System.out.println(e1.getDetails());*/
+
+        // since e1 is the ref of employee class: what all method it can access?
+        // to get the all details of the manager class we need to downcast the e1 to manager class
+
+        // this is known as downcasting
+/*        Manager m2 = (Manager)e1;
+        System.out.println("works for: "+m2.getDeptName()+" department");*/
+
+        // utility of upcasting and downcasting
+        Employee[] emparr = new Employee[4];
+        emparr[0] = new Employee(100,"nabin",50000);
+        emparr[1] = new Manager(200,"lalit",40000,"it",10);
+        emparr[2] = new Programmer(300,"aarya",30000,3,"java developer");
+        emparr[3] = new Programmer(301,"king",36000,5,"python developer");
+        System.out.println("...........employee details..........");
+        for(Employee emp:emparr)
+        {
+            System.out.println(emp.getDetails());
+        }
+
+    }
+}
+.............employee details..................
+100   nabin     50000
+200   lalit     40000    it    10
+300   aarya     30000     3    java developer
+301   king     36000     5    python developer
+.................................................................................
+Generalization -> lead to design of the base/super/parent class
+specification -. lead to the desing of the derived/sub/ child class
+
+Abstract classes: 
+
+	Employeeprotected int empid;string empName;int sal;
+			calculatedNetSalary() ----->abstract
+		  manager	            Programmer
+	calculatedNetSalary()		calculatedNetSalary()
+
+.................................................................................
+package EmployeePack;
+// an abstract class cannot instantiate, or cannot create objects
+public abstract class Employee {
+        protected int empID;
+        protected String empName;
+        protected int sal;
+
+        public Employee(int empID, String empName, int sal) {
+            this.empID = empID;
+            this.empName = empName;
+            this.sal = sal;
+        }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empID=" + empID +
+                ", empName='" + empName + '\'' +
+                ", sal=" + sal +
+                '}';
+    }
+
+    public abstract double calcNetSal();
+        // abstract method : which will not have any body only
+    //if any method is abstract method in class, the class true itself to a abstract class
+        public int getSal()
+        {
+            return sal;
+        }
+    }
+package EmployeePack;
+
+public class Manager extends Employee {
+
+
+
+        private String deptName;
+        private int empcount;
+
+        public Manager(int empID, String empName, int sal,String deptName,int empcount) {
+            super(empID, empName, sal);//constructor chaining ,base class constructor evoked within derived class constructor
+            //using super class
+            this.deptName=deptName;
+            this.empcount=empcount;
+        }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "empID=" + empID +
+                ", empName='" + empName + '\'' +
+                ", sal=" + sal +
+                ", deptName='" + deptName + '\'' +
+                ", empcount=" + empcount +
+                '}';
+    }
+
+
+
+        @Override
+        public double calcNetSal()
+        {
+            return 1000;
+        }
+        public String getDeptName() {
+            return deptName;
+        }
+
+        public int getEmpcount() {
+            return empcount;
+        }
+    }
+
+
+package EmployeePack;
+
+public class Programmer extends Employee {
+    private int noOfProjects;
+    private String skillSet;
+
+    public Programmer(int empID, String empName, int sal,int noOfProjects,String skillSet) {
+        super(empID, empName, sal);
+        this.noOfProjects=noOfProjects;
+        this.skillSet=skillSet;
+    }
+
+    @Override
+    public String toString() {
+        return "Programmer{" +
+                "empID=" + empID +
+                ", empName='" + empName + '\'' +
+                ", sal=" + sal +
+                ", noOfProjects=" + noOfProjects +
+                ", skillSet='" + skillSet + '\'' +
+                '}';
+    }
+
+    @Override
+    public double calcNetSal()
+    {
+        return 2000;
+    }
+}
+package com.company;
+
+import EmployeePack.Employee;
+import EmployeePack.Manager;
+import EmployeePack.Programmer;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Manager m1 = new Manager(100,"lalit",2000,"it",5);
+        System.out.println(m1+"    "+m1.calcNetSal());
+
+        Programmer p1 = new Programmer(200,"nabin",40000,5,"java");
+        System.out.println(p1+"    "+p1.calcNetSal());
+
+        Employee[] emparr = new Employee[4];
+        emparr[0] = new Manager(100,"nabin",50000,"finance",5);
+        emparr[1] = new Manager(200,"lalit",40000,"it",10);
+        emparr[2] = new Programmer(300,"aarya",30000,3,"java developer");
+        emparr[3] = new Programmer(301,"king",36000,5,"python developer");
+        System.out.println("...........employee details..........");
+        for(Employee emp:emparr)
+        {
+            System.out.println(emp+"net salary "+emp.calcNetSal());
+        }
+
+
+    }
+}
+Manager{empID=100, empName='lalit', sal=2000, deptName='it', empcount=5}    1000.0
+Programmer{empID=200, empName='nabin', sal=40000, noOfProjects=5, skillSet='java'}    2000.0
+...........employee details..........
+Manager{empID=100, empName='nabin', sal=50000, deptName='finance', empcount=5}net salary 1000.0
+Manager{empID=200, empName='lalit', sal=40000, deptName='it', empcount=10}net salary 1000.0
+Programmer{empID=300, empName='aarya', sal=30000, noOfProjects=3, skillSet='java developer'}net salary 2000.0
+Programmer{empID=301, empName='king', sal=36000, noOfProjects=5, skillSet='python developer'}net salary 2000.0
+
+................................................................................
+
+interface : mechanism to achieve abstraction
+	is also a part of inheritance olny
+
+interface:client contract
+
+Interface interface1{
+
+	void method1();
+	void method2();
+
+}
+5 requirements -----> 5 modules.
+...................................................................................
+
+package com.torryharris.Interfacepack;
+
+public interface Interface1 {
+    void m1();// by default  public abstract method
+    void m2();
+    void m3();
+}
+package com.torryharris.Interfacepack;
+
+public interface Interface2 {
+    int count =10; // by default the variable is public static final variable
+    void m4();  // by default  public abstract method
+    void m5();
+
+}
+package com.torryharris.Interfacepack;
+
+public class Class1 implements Interface1,Interface2{
+    @Override
+    public void m1()
+    {
+        System.out.println("in m1");
+    }
+    @Override
+    public void m2()
+    {
+        System.out.println("in m2");
+    }
+    @Override
+    public void m3()
+    {
+        System.out.println("in m3");
+    }
+
+
+    @Override
+    public void m4() {
+        System.out.println("in m4");
+        System.out.println(" count value : "+Interface2.count);
+    }
+
+    @Override
+    public void m5() {
+        System.out.println("in m5");
+    }
+}
+package com.company;
+
+import com.torryharris.Interfacepack.Class1;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Class1 cls = new Class1();
+        cls.m1();
+        cls.m4();
+
+    }
+}
+in m1
+in m4
+ count value : 10
+..............................................................................................................
+Interface Automobile:
+
+1.start();
+2.increaseSpeed();
+3.stop();
+
+class vehicle
+
+regno
+model
+currSpeed
+
+class car ---> complete concrete class
+
+psv main() ----> class car will be create
+
+1. protected : package friendly,accessible derived classes
+...............................................................................................................
+
+
+
