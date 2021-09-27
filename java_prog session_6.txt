@@ -1,0 +1,572 @@
+package com.torryharris.mydatepack;
+
+// to illustrate equals() and hashcode() methods of object class
+// illustrating the overidding of equals() and
+public class Mydate {
+    private int day;
+    private int month;
+    private int year;
+
+    public Mydate(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+// parameter passed to equals() method is object ref---> obj
+    @Override
+    public boolean equals(Object o) {
+        Mydate d = (Mydate)o; //-----> downCasting
+        //this ----> d1 obj ---> d3 obj downcasting to d
+
+        if((this.day ==d.day)&&(this.month==d.month)&&(this.year==d.year))
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        // XOR is bitwise operator
+        return (day^month^year); //XOR operator taken to give a hashcode using day,month,year as the key
+    }
+
+    @Override
+    public String toString() {
+        return "Mydate{" +
+                "day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
+    }
+}
+package com.company;
+
+import com.torryharris.mydatepack.Mydate;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Mydate d1 = new Mydate(27,9,2021);
+        Mydate d2 = new Mydate(27,9,2021);
+        Mydate d3 = d1;
+        Mydate d4 = new Mydate(26,9,2020);
+        System.out.println("**************** "+d1.equals(d2));
+        // on default it compare the refrences. it doesn't comapre the contents
+        System.out.println("**************** "+d1.equals(d3));
+        // we need to override the equals() if we need to compare the content of the object
+
+        // operator == will always compare the references
+        System.out.println(d1==d3);
+
+        // equals() and hashcode() methods are related or dependent on each other
+        // if two objects are equal their hashcode() should also be equal
+        //it is mandatory that if we override equals() we also should override hashcode()
+
+        System.out.println("d1.hashcode: "+d1.hashCode());
+        System.out.println("d2.hashcode: "+d2.hashCode());
+        System.out.println("d3 hashcode: "+d3.hashCode());
+        
+    }
+}
+**************** true
+**************** true
+true
+d1.hashcode: 2039
+d2.hashcode: 2039
+d3 hashcode: 2039
+...............................................................................................................................................
+
+
+datastructure: -
+-------------------
+	1.sets
+	2.Arraylist
+	3.linked list
+	4.stacks
+	5. queue
+		collection framework: - collecting and organizing the object
+		------------------------------
+	-set			-list
+Implemented classes : concrete classes
+1.hashset()
+2.LinkHashSet()
+3.TreeSet()
+
+--------------------------------------------------------------------------------------------------------------------------
+Rules followed for set collection
+1. no duplicates are allowed
+2. no object is equal to other object in a set
+s1.equals(s2) will always be false
+
+3. HashSet() is organizing objects based on hash code of the object
+4. TreeSet 
+package com.company;
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Set s1 = new HashSet();
+        // method used to insert or add element in any collection is add()
+        s1.add(1);
+        s1.add("a");
+        s1.add(12.4f);
+        s1.add(null);
+        // s1 is consdering all the objects added as object of object class
+        // hashSet organises object based on its hashcode
+        //it is called as unordered set
+        // no duplicate are allowed
+
+        System.out.println(s1);
+        // how do you cast or convert a set to a particular data type
+        // we need to specify the generic type of the set
+        //1. it will not follow the order of insertion
+        //2.it will not allow duplicate
+
+        Set<String> s2 = new HashSet<String>();
+        s2.add("aaa");
+        s2.add("xyz");
+        s2.add("aaa");
+        s2.add("zzz");
+        s2.add("ppp");
+        System.out.println(s2);
+    // Linked hashSet
+    // unsorted, but ordered set if follow the order of insertion
+        //{set <----->hashSet<-----> linkedHashSet}
+         Set<String> s3 = new LinkedHashSet<String>();
+         s3.add("aaa");
+            s3.add("xyz");
+            s3.add("aaa");
+            s3.add("zyx");
+            s3.add("pqr");
+            s3.add("zzz");
+            System.out.println(s3);
+    // TreeSet
+    // sorted set according to natural ordering is maintained
+        // {set <----> sortedSet<----->NavigableSet<-----> TreeSet}
+
+        Set<String> s4 = new TreeSet<String>();
+        s4.add("nabin");
+        s4.add("sanjay");
+        s4.add("aaryan");
+        s4.add("raju");
+        s4.add("shambhu");
+        s4.add("anish");
+        s4.add("nabin");
+        System.out.println(s4);
+
+
+    }
+
+
+    }
+[12.4, null, 1, a]
+[aaa, ppp, xyz, zzz]
+[aaa, xyz, zyx, pqr, zzz]
+[aaryan, anish, nabin, raju, sanjay, shambhu]
+...............................................................................................................................................
+2.List: -
+	Root interface is collection 
+	list is a sub class of collection
+	it allow duplicate elements
+	insertion, deletion,
+	implemented classes
+		
+		1. Arraylist 
+		2.Linkedlist 
+		3.vector
+package com.company;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // it's a dynamically growing array
+        // duplicates are allowed
+        // on default size of array is 10
+
+        List<String> strArrList = new ArrayList<String>(15);
+        strArrList.add("nabin");
+        strArrList.add("nabin");
+        strArrList.add("arjun");
+        strArrList.add("aaryan");
+        System.out.println(strArrList);
+        // to insertion an element in 1 index value
+        strArrList.add(0,"king");
+        System.out.println(strArrList);
+        strArrList.remove(2);
+        System.out.println(strArrList);
+        strArrList.remove("aaryan");
+        System.out.println(strArrList);
+
+        ArrayList<String> sublist = new ArrayList<String>();
+
+        sublist.add("one");
+        sublist.add("two");
+        sublist.add("three");
+
+        strArrList.addAll(1,sublist);
+        System.out.println(strArrList);
+        // traditional for loop
+        for(int i=0;i<strArrList.size();i++)
+        {
+            System.out.print (strArrList.get(i)+" ");
+        }
+        // enhanced for loop
+        System.out.println();
+        for(String name:strArrList)
+        {
+            System.out.print(name+" ");
+        }
+        System.out.println();
+        Iterator<String > it = strArrList.iterator();
+        while(it.hasNext())
+        {
+            System.out.print(it.next().toUpperCase()+" ");
+        }
+        System.out.println();
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Integer> ilist = new ArrayList<Integer>();
+        System.out.println("enter no. of element in the arraylist");
+        int n = sc.nextInt();
+        for(int i=0;i<n;i++)
+        {
+            int ele=sc.nextInt();
+            ilist.add(ele);
+        }
+        int sum=0;
+        Iterator<Integer> it1 = ilist.iterator();
+
+        while(it1.hasNext())
+        {
+            int ele1 = it1.next();
+            System.out.print(ele1+" ");
+            sum+=ele1;
+
+        }
+        System.out.println();
+        System.out.println("sum of element: "+sum);
+
+
+    }
+}
+[nabin, nabin, arjun, aaryan]
+[king, nabin, nabin, arjun, aaryan]
+[king, nabin, arjun, aaryan]
+[king, nabin, arjun]
+[king, one, two, three, nabin, arjun]
+king one two three nabin arjun 
+king one two three nabin arjun 
+KING ONE TWO THREE NABIN ARJUN 
+enter no. of element in the arraylist
+3
+10
+40
+50
+10 40 50 
+sum of element: 100
+...............................................................................................................................................
+
+
+package com.company;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // it's a doubly linkedlist
+        // duplicates are allowed
+        // Each node holds data and also a link(address) which points to next node int the list
+        // Iterators : listIterator, Iterators can be used traversing list
+        //add in beg,between, end nodes can be added or removed
+
+        List<String>l1 = new LinkedList<String>();
+        l1.add("orange");
+        l1.add("Apple");
+        l1.add("Grapes");
+
+        System.out.println("Is empty? "+l1.isEmpty());
+        System.out.println("contains grapes? "+l1.contains("Grapes"));
+
+        ListIterator<String> it = l1.listIterator();
+        System.out.println("In forward direction:");
+        while(it.hasNext())
+        {
+            System.out.print(it.next()+" ");
+        }
+        System.out.println();
+        System.out.println("printing in backward direction");
+        while (it.hasPrevious())
+        {
+            System.out.print(it.previous()+" ");
+        }
+        System.out.println();
+        Collections.reverse(l1);
+        System.out.println(l1);
+        Collections.sort(l1);
+        System.out.println(l1);
+        Collections.shuffle(l1);
+        System.out.println(l1);
+
+    }
+}
+Is empty? false
+contains grapes? true
+In forward direction:
+orange Apple Grapes 
+printing in backward direction
+Grapes Apple orange 
+[Grapes, Apple, orange]
+[Apple, Grapes, orange]
+[Apple, Grapes, orange]
+..............................................................................................................................................
+Stack collection (Data Structure) is child /sub class of vector
+1.push
+2.pop
+3.peek ------> return top element
+
+package com.company;
+
+import java.util.Stack;
+import java.util.Vector;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // Stack works with rule:LIFO
+
+        Stack<String> st = new Stack<String>();
+        st.push("king");
+        st.push("nabin");
+        st.push("aaryan");
+        st.pop();
+        System.out.println(st);
+
+        System.out.println(st.peek());
+
+    }
+}
+[king, nabin]
+nabin
+...............................................................................................................................................
+package com.company;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Queue<String> q  =new LinkedList<String>();
+
+        q.add("java");
+        q.add("html");
+        q.add("css");
+        q.add("javaScript");
+
+        System.out.println(q);
+        System.out.println(q.poll());// removing element in FIFO order
+        System.out.println(q.peek()); // doesn't remove the element but give the next which will be removed
+        System.out.println(q);
+    }
+}
+[java, html, css, javaScript]
+java
+html
+[html, css, javaScript]
+...............................................................................................................................................
+			Map
+hashtable		hashmap			sortedMap
+		LinkedHashMap		NavigateMap
+					TreeMap
+Implemented classes 
+1.hashTable
+2.hashMap
+3.LinkedHashMap
+4.treeMap
+
+Map is object which has a unique key paird
+--------------------------------------------------------------------------------------------------------------------------
+package com.company;
+
+import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Map<Integer,String> hm= new HashMap<Integer,String>();
+        // method used to insert objects in map (HashMap)
+        //put()
+        // only one null key is allowed in hashMap
+        // to organize the objects its take the hashCode of the key elements
+        //key no duplicates are allowed
+        // latest value will override the duplicated key value
+        // no order of insertion followed
+        hm.put(101,"books");
+        hm.put(200,"pen");
+        hm.put(100,"paper");
+        hm.put(null,null);
+        hm.put(250,null);
+        hm.put(350,null);
+        System.out.println(hm);
+        // linkedHashMap
+        // it followed order of insertion
+        Map<Integer,String> lhm = new LinkedHashMap<Integer,String>();
+        lhm.put(101,"books");
+        lhm.put(200,"pen");
+        lhm.put(100,"paper");
+        lhm.put(null,null);
+        lhm.put(250,null);
+        lhm.put(350,null);
+        System.out.println(lhm);
+
+        // Tree Map is sorted : it will sort objects based on key natural order followed
+        // null key is not allowed in TreeMap
+        Map<Integer, String> tm = new TreeMap<Integer,String>();
+        tm.put(800,"books");
+        tm.put(200,"paper");
+        tm.put(50,"pen");
+        //tm.put(null,null); not allowed
+        tm.put(350,null);
+        tm.put(750,null);
+        System.out.println(tm);
+
+        //HashTable does not allow null as a key as well as value to be null at all
+        //not follow order of insertion
+        Map<Integer, String> ht = new Hashtable<Integer,String>();
+        ht.put(800,"books");
+        ht.put(200,"paper");
+        ht.put(50,"pen");
+        //tm.put(null,null); not allowed key and value should not be null
+        ht.put(350,"mobile");
+        ht.put(750,"mouse");
+        System.out.println(ht);
+
+    }
+}
+{null=null, 100=paper, 101=books, 200=pen, 250=null, 350=null}
+{101=books, 200=pen, 100=paper, null=null, 250=null, 350=null}
+{50=pen, 200=paper, 350=null, 750=null, 800=books}
+{350=mobile, 800=books, 50=pen, 750=mouse, 200=paper}
+.............................................................................................................................................
+problem: i wanted to find the amount invested in the stock in my show room
+1.sofa
+2.table
+3.lamp
+
+package com.company;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // product Store : which can hold the name and it's price
+        //here is where i adopt for maps ----> key-value pair
+
+        Map<String,Integer> hm = new HashMap<String,Integer>();
+        hm.put("sofa",5000);
+        hm.put("table",3000);
+        hm.put("lamp",3000);
+
+        // can we access key separately
+        // can we access values separately
+        // can we access both
+
+        System.out.println(hm.keySet());
+        System.out.println(hm.values());
+        System.out.println(hm.entrySet());
+        // how iterate the map key and value
+        // thru the key we can can access it's value
+        // Printing the map elements using for loop
+
+        for(String key:hm.keySet())
+        {
+            System.out.println(key+"    "+hm.get(key));
+        }
+        int totalamt = 0;
+        for(String key: hm.keySet())
+        {
+            totalamt+=hm.get(key);
+
+        }
+        System.out.println("total amount invested is "+totalamt);
+    }
+}
+
+[sofa, lamp, table]
+[5000, 3000, 3000]
+[sofa=5000, lamp=3000, table=3000]
+sofa    5000
+lamp    3000
+table    3000
+total amount invested is 11000
+...............................................................................................................................................
+package Custpack;
+
+import java.util.HashMap;
+
+public class Customer {
+    private int id;
+    private String name;
+
+    public Customer(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+
+}
+
+package com.company;
+
+import Custpack.Customer;
+
+import java.util.*;
+import java.util.Map;
+
+public class Main {
+
+    public static void main(String[] args) {
+       HashMap<Customer,Integer> cust = new HashMap<Customer,Integer>();
+       cust.put(new Customer(10,"nabin"),10000);
+       cust.put(new Customer(20,"king"),30000);
+       cust.put(new Customer(30,"aaryan"),45000);
+
+
+       for(Customer custmap:cust.keySet())
+       {
+           System.out.println(custmap+" "+cust.get(custmap));
+       }
+       int totalsalesamount =0;
+       for(Customer customer:cust.keySet())
+       {
+           totalsalesamount+=cust.get(customer);
+
+       }
+        System.out.println("total sales amount: "+totalsalesamount);
+
+    }
+}
+Customer{id=20, name='king'} 30000
+Customer{id=10, name='nabin'} 10000
+Customer{id=30, name='aaryan'} 45000
+total sales amount: 85000
