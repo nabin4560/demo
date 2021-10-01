@@ -1,0 +1,317 @@
+package modulepack;
+
+public class Book {
+    private int bookID;
+    private String bookName;
+    private int bookPrice;
+
+    public Book(int bookID, String bookName, int bookPrice) {
+        this.bookID = bookID;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public int getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(int bookPrice) {
+        this.bookPrice = bookPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookID=" + bookID +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                '}';
+    }
+}
+package bookOpPack;
+
+import modulepack.Book;
+
+import java.util.ArrayList;
+
+public interface BookOperations {
+    String addABook(Book book);
+    ArrayList<Book> getAllBooks();
+    Book getABook(int bookID);
+    String setBookPrice(int bookID,int upPrice);
+
+}
+
+
+package bookOpPack;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBManager {
+    private static Connection con;
+    public static Connection getConnection() {
+        try {
+            con = DriverManager.getConnection ("jdbc:mysql://localhost:3306/bookdatabase","root","N@bin2468");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return con;
+
+    }
+}
+
+
+package bookOpPack;
+
+import modulepack.Book;
+
+import javax.xml.transform.Result;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class BookOperationImpl implements BookOperations{
+private static Connection con = null;
+
+    @Override
+    public String addABook(Book book) {
+        PreparedStatement ps = null;
+        con = DBManager.getConnection();
+        String str = "insert into book values(?,?,?)";
+        try{
+            ps = con.prepareStatement(str);
+            ps.setInt(1,book.getBookID());
+            ps.setString(2,book.getBookName());
+            ps.setInt(3,book.getBookPrice());
+
+            ps.executeUpdate();
+            return "one row inserted: ";
+
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            return "insertion failed";
+        }
+
+
+    }
+
+    @Override
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> blist = new ArrayList<Book>();
+        con = DBManager.getConnection();
+
+        try{
+            Statement st = con.createStatement();
+            ResultSet rs =st.executeQuery("select * from book");
+
+            while(rs.next())
+            {
+                Book book = new Book(rs.getInt(1),rs.getString(2),rs.getInt(3));
+                blist.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return blist;
+    }
+
+    @Override
+    public Book getABook(int bookID) {
+        con = DBManager.getConnection();
+        Book book=null;
+
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from book where bookID="+bookID);
+            while(rs.next())
+            {
+                book = new Book(rs.getInt(1),rs.getString(2),rs.getInt(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return book;
+
+    }
+
+    @Override
+    public String setBookPrice(int bookID, int upPrice) {
+
+        PreparedStatement ps = null;
+        String str="update book set bookprice = ? where bookID=?";
+        con = DBManager.getConnection();
+        try {
+            ps = con.prepareStatement(str);
+            ps.setInt(1,upPrice);
+            ps.setInt(2,bookID);
+            ps.executeUpdate();
+            return "one row updated:book price updated successfully..";
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            return "updation failed due to exception";
+        }
+
+
+
+    }
+}
+
+
+package Mainpack;
+
+import bookOpPack.BookOperationImpl;
+import modulepack.Book;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class BookStoreMain {
+    public static void main(String[] args)
+    {
+        Scanner sc= new Scanner(System.in);
+        BookOperationImpl boi = new BookOperationImpl();
+        while (true)
+        {
+            System.out.println("1.Add a book"); //Admin
+            System.out.println("2.List all the book"); //Admin , User
+            System.out.println("3.Get a book"); // Admin, User
+            System.out.println("4.update a Book Price"); // Admin
+            System.out.println("5.Exit");
+
+            System.out.println("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch(choice)
+            {
+                case 1:
+                {
+                    System.out.println("Enter the details of the book");
+                    int bookID = sc.nextInt();
+                    String bookName = sc.next();
+                    int bookPrice = sc.nextInt();
+                    Book book = new Book(bookID,bookName,bookPrice);
+                    System.out.println(boi.addABook(book));
+
+                    break;
+
+                }
+                case 2:
+                {
+                    ArrayList<Book> blist = boi.getAllBooks();
+                    for(Book book:blist)
+                    {
+                        System.out.println(book);
+                    }
+
+                    break;
+                }
+                case 3:
+                {
+                    System.out.println("Enter the book id to searched");
+                    int bookID = sc.nextInt();
+                    Book book = boi.getABook(bookID);
+                    if(book !=null)
+                    {
+                        System.out.println(book);
+                    }
+                    else
+                        System.out.println("book not found in the store");
+                    break;
+                }
+                case 4:
+                {
+                    System.out.println("Enter the bookID: ");
+                    int bookID = sc.nextInt();
+                    System.out.println("Etner the updated price of the book");
+                    int uPrice  = sc.nextInt();
+                    System.out.println(boi.setBookPrice(bookID,uPrice));
+
+                    break;
+
+                }
+                default:
+                    sc.close();
+                    System.out.println("Bye!!! Have a nice day");
+                    System.exit(0);
+            }
+
+
+        }
+
+
+    }
+}
+.......................................................................................................................
+1.Add a book
+2.List all the book
+3.Get a book
+4.update a Book Price
+5.Exit
+Enter your choice: 
+3
+Enter the book id to searched
+1
+Book{bookID=1, bookName='java', bookPrice=250}
+1.Add a book
+2.List all the book
+3.Get a book
+4.update a Book Price
+5.Exit
+Enter your choice: 
+................................
+1.Add a book
+2.List all the book
+3.Get a book
+4.update a Book Price
+5.Exit
+Enter your choice: 
+1
+Enter the details of the book
+90
+mysql
+780
+one row inserted: 
+1.Add a book
+2.List all the book
+3.Get a book
+4.update a Book Price
+5.Exit
+Enter your choice: 
+5
+Bye!!! Have a nice day
+----------------------------------------------------------------------------------------------------
+
+meta data example
+
+import java.sql.*;
+
+public class Main {
+    public static void main(String[] args) throws SQLException {
+        Connection con = DriverManager.getConnection ("jdbc:mysql://localhost:3306/bookdatabase","root","N@bin2468");
+        Statement st = con.createStatement();
+
+        ResultSet rs = st.executeQuery("select * from book");
+
+        ResultSetMetaData rsmd = rs.getMetaData();
+        System.out.println("total no of columns: "+rsmd.getColumnCount());
+        System.out.println("column name of 1st column: "+rsmd.getColumnName(1));
+        System.out.println("column type of 1st column: "+rsmd.getColumnTypeName(1));
+
+
+
+    }
+}
+total no of columns: 3
+column name of 1st column: bookid
+column type of 1st column: INT
+-----------------------------------------------------------------------------------------------------

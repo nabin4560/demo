@@ -1,0 +1,295 @@
+lombok jars: External libs added to our project
+
+Maven projects ----> add dependancy --- the jar files needed for our projects
+maven provides a proper baseline (structure) for the required artifacts  of if we
+need baseline for SE
+
+	src 
+	       java 
+		we create all our package
+
+pm.xml ---> project objects model
+
+we see user defined tags in xml file 
+.xml files are machine readable
+pom.xml is describing the configuration,name and version of project
+	it also gives the info of the external libs linked to your project
+
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13.1</version>
+    <scope>test</scope>
+</dependency>
+....................................................
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+//@Getter
+@AllArgsConstructor
+//@Setter
+@ToString
+public class Customer {
+    @Getter
+    private int  custId;
+    private String custName;
+    @Getter
+    private int  balance;
+
+}
+public class Main {
+    public static void main(String[] args) {
+       /* Customer cust1 = new Customer(100,"nabin",10000);
+        System.out.println(cust1);*/
+
+      /*  Customer cust2 = new Customer();
+        cust2.setCustId(200);
+        cust2.setCustName("aaryan");
+        cust2.setBalance(20000);
+
+        System.out.println(cust2);
+*/
+       Customer cust3 = new Customer(300,"anish",30000);
+        System.out.println(cust3.getCustId()+"  "+ cust3.getBalance());
+
+        Person person = new Person();
+        person.setId(10);
+        person.setName("nabin");
+
+        System.out.println(person);
+    }
+}
+import lombok.Data;
+
+public @Data class Person {
+    private int id;
+    private String name;
+}
+300  30000
+Person(id=10, name=nabin)
+
+-------------------------------------------------------------------------------------------------------
+File copy 
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        File file1 = new File("C:\\Users\\nabin_mahato\\Desktop\\thbsfile1.txt");
+        File file2 = new File("C:\\Users\\nabin_mahato\\Desktop\\thbsfile2.txt");
+
+        try(FileReader fr = new FileReader(file1);
+            BufferedReader br = new BufferedReader(fr);
+            FileWriter fw = new FileWriter(file2);
+            BufferedWriter bw = new BufferedWriter(fw);) {
+            String str;
+            while((str = br.readLine())!=null)
+            {
+                System.out.println(str);
+                bw.write(str);
+                bw.newLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+good morning 
+good evening
+good night
+happy ending
+END
+....................................................................................................................
+Problem statement :
+1. read a file in character format
+2. print the data read from the file in the console
+--------------------------------------------------------------------------
+read and write in byte format:
+1. by reading and writing single bytes
+2. reading and writting array of bytes
+------------------------------------------------------------------------
+Streams are 
+fileInputStream 
+BufferedInputStream
+
+fileoutStream
+BufferOutputStream.
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        File file1 = new File("C:\\Users\\nabin_mahato\\Desktop\\thbsfile1.txt");
+        File file2 = new File("C:\\Users\\nabin_mahato\\Desktop\\thbsfile2.txt");
+
+        try(FileInputStream input = new FileInputStream(file1);
+            BufferedInputStream bis = new BufferedInputStream(input);
+
+            FileOutputStream output = new FileOutputStream(file2);
+            BufferedOutputStream bos = new BufferedOutputStream(output);
+            ) {
+            // to know the size of a file we use the method avialable()
+
+            byte[] buffer = new byte[input.available()];
+            bis.read(buffer);
+            bos.write(buffer);
+            for(byte b:buffer)
+            {
+                System.out.print((char)b);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+java is a object oriented programming.
+........................................................................................................................
+Student 
+{
+id
+name
+marks
+}
+s1--->id ---> 4 bytes
+	name ---> 10bytes
+	marks ---> 4bytes
+........................................................................................................................
+
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) {
+        File file1 = new File("C:\\Users\\nabin_mahato\\Desktop\\thbsfile5.txt");
+        try(
+            FileOutputStream output = new FileOutputStream(file1);
+            ObjectOutputStream out = new ObjectOutputStream(output);
+            FileInputStream input = new FileInputStream(file1);
+            ObjectInputStream in = new ObjectInputStream(input);
+            ) {
+            Student student1 = new Student(100,"nabin",80);
+            // Writting the serialized object
+            out.writeObject(student1);
+            Student std2 = new Student(200,"aarya",90);
+            out.writeObject(std2);
+
+
+
+            System.out.println("student Records written in file1");
+
+            //deserialized
+            // 1. No new Objects will be created : no constructors will work
+            //2. the size of the file (size of all the objects in the file) is got using avialabe()
+            //3. FileInputStream object will get you to total size of the file
+
+            while (input.available()>0)
+            {
+                Student student = (Student) in.readObject();
+                System.out.println(student);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+// if the class objects are going for permanent persistance we need to serialize the class
+// this concept in java is called serialization
+// it means kindly save the serial order of the member variable while storing
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+    private int id;
+    private String name;
+    private int marks;
+
+    public Student(int id, String name, int marks) {
+        this.id = id;
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", marks=" + marks +
+                '}';
+    }
+}
+student Records written in file1
+Student{id=100, name='nabin', marks=80}
+Student{id=200, name='aarya', marks=90}
+------------------------------------------------------------------------------------------------------
+
+
+	Connecting database in java
+	------------------------------------
+JDBC
+	connecting java programs to databases
+JDBC : java data base connectivity 
+Normal java program can not to database
+
+explore the JDBC API(Application Programming  Interface)
+what classes : JDBC API (jar file)
+what are steps
+how java programs can not connect to diff diff databases : diff drivers
+
+how are the SQL statements executed 
+how output of sql statement s be printed thru java program
+how transaction management implement thru jdbc
+can we get meta data of database
+
+import java.sql.*;
+
+public class Main {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        // Load the driver
+        //Class.forName("com.mysql.jdbc.Driver");
+        // Establish connection with database using drivers
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdatabase","root","N@bin2468");
+        Statement st = con.createStatement();
+        // execute the query
+        ResultSet rs = st.executeQuery("select * from book");
+        // extract the rows form the rs----> Resultset Object
+        while(rs.next())
+        {
+            System.out.println(rs.getInt(1)+"   "+rs.getString(2)+" "+rs.getInt(3));
+
+        }
+        // close the connection
+        con.close();
+    }
+}
+
+1   java 250
+2   html 300
+3   css 300
+.................................................................................
+
+
+
+
+
+
